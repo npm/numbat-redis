@@ -1,48 +1,56 @@
+var bole = require('bole');
 var redis = require('redis');
 var redisInfo = require('redis-info');
-var producer = require('godot-producer');
+var NumbatEmitter = require('numbat-emitter');
 
-var RedisProducer = module.exports = producer(
-  function constructor(options) {
-    var self = this;
+var DEFAULT_INTERVAL = 1000;
 
-    self.redis = redis.createClient(options.redis);
-  },
+var RedisProducer = module.exports = function(options) {
+  var emitter = new NumbatEmitter(options);
+  setInterval(produce, options.interval || DEFAULT_INTERVAL);
+
+  var logger = options.logger || bole('numbat-redis');
+
+  var client = redis.createClient(options.redis);
+
   function produce() {
-    var self = this;
+    client.info(function (err, info) {
+      if (err) {
+        logger.error('error while trying to retrieve Redis stats', err);
+        return;
+      }
 
-    self.redis.info(function (err, info) {
       var parsed = redisInfo.parse(info);
 
-      self.emit('data', {
-        service: 'redis/clients',
+      emitter.metric({
+        name: 'redis.clients',
         description: 'Clients connected',
-        metric: parseInt(parsed.fields.connected_clients, 10)
+        value: parseInt(parsed.fields.connected_clients, 10)
       });
 
-      self.emit('data', {
-        service: 'redis/blocked-clients',
+      emitter.metric({
+        name: 'redis.blocked-clients',
         description: 'Clients waiting for a blocking operation to finish',
-        metric: parseInt(parsed.fields.blocked_clients, 10)
+        value: parseInt(parsed.fields.blocked_clients, 10)
       });
 
-      self.emit('data', {
-        service: 'redis/rejected-connections',
+      emitter.metric({
+        name: 'redis.rejected-connections',
         description: 'Clients rejected due to limit of clients',
-        metric: parseInt(parsed.fields.rejected_connections, 10)
+        value: parseInt(parsed.fields.rejected_connections, 10)
       });
 
-      self.emit('data', {
-        service: 'redis/ops-per-sec',
+      emitter.metric({
+        name: 'redis.ops-per-sec',
         description: 'Operations per second',
-        metric: parseInt(parsed.fields.instantaneous_ops_per_sec, 10)
+        value: parseInt(parsed.fields.instantaneous_ops_per_sec, 10)
       });
 
-      self.emit('data', {
-        service: 'redis/slaves',
+      emitter.metric({
+        name: 'redis.slaves',
         description: 'Slaves connected',
-        metric: parseInt(parsed.fields.connected_slaves, 10)
+        value: parseInt(parsed.fields.connected_slaves, 10)
       });
     });
   }
-);
+};

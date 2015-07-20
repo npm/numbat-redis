@@ -1,0 +1,46 @@
+#!/usr/bin/env node
+var os = require('os');
+var RedisProducer = require('../');
+var nconf = require('nconf');
+var bole = require('bole');
+var config;
+
+bole.output({
+  level: 'info',
+  stream: process.stdout
+});
+
+nconf
+  .argv({
+    uri:      { alias: 'u' },
+    hostname: { alias: 'h' },
+    redis:    { alias: 'r' },
+    config:   { alias: 'c' },
+    interval: { alias: 'i' }
+  });
+
+config = nconf.get('config');
+if (config) {
+  nconf.file(nconf.get('config'));
+}
+
+if (nconf.get('help')) {
+  console.log([
+    'usage: numbat-redis [options]\n',
+    'options:',
+    '  -c, --config    Config file to use (default: config/development.json)',
+    '  -u, --uri       numbat-collector or numbat-analyzer URI',
+    '  -r, --redis     Redis URI',
+    '  -h, --hostname  Hostname (defaults to ' + os.hostname() + ')',
+    '  -i, --interval  How often to emit metrics',
+    '      --help      You\'re staring at it'
+  ].join('\n') + '\n');
+  process.exit();
+}
+
+var producer = new RedisProducer({
+  uri: nconf.get('uri'),
+  node: nconf.get('hostname') || os.hostname(),
+  haproxy: nconf.get('socket'),
+  interval: nconf.get('interval')
+});
