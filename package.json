@@ -19,5 +19,8 @@
     "redis": "~0.10.0",
     "redis-info": "~2.0.2"
   },
+  "bin": {
+    "numbat-redis": "./bin/numbat-redis"
+  },
   "license": "MIT"
 }
