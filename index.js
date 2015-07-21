@@ -11,7 +11,11 @@ var RedisProducer = module.exports = function(options) {
 
   var logger = options.logger || bole('numbat-redis');
 
-  var client = redis.createClient(options.redis);
+  var client = redis.createClient(
+    options.redis.port,
+    options.redis.host,
+    options.redis
+  );
 
   function produce() {
     client.info(function (err, info) {

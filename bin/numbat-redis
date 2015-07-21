@@ -14,7 +14,8 @@ nconf
   .argv({
     uri:      { alias: 'u' },
     hostname: { alias: 'h' },
-    redis:    { alias: 'r' },
+    auth:     { alias: 'a' },
+    port:     { alias: 'p' },
     config:   { alias: 'c' },
     interval: { alias: 'i' }
   });
@@ -30,7 +31,9 @@ if (nconf.get('help')) {
     'options:',
     '  -c, --config    Config file to use (default: config/development.json)',
     '  -u, --uri       numbat-collector or numbat-analyzer URI',
-    '  -r, --redis     Redis URI',
+    '  -h, --host      Redis host',
+    '  -p, --port      Redis port',
+    '  -a, --auth      Redis authentication',
     '  -h, --hostname  Hostname (defaults to ' + os.hostname() + ')',
     '  -i, --interval  How often to emit metrics',
     '      --help      You\'re staring at it'
@@ -41,6 +44,10 @@ if (nconf.get('help')) {
 var producer = new RedisProducer({
   uri: nconf.get('uri'),
   node: nconf.get('hostname') || os.hostname(),
-  haproxy: nconf.get('socket'),
+  redis: {
+    host: nconf.get('host') || '127.0.0.1',
+    port: nconf.get('port') || 6379,
+    auth_pass: nconf.get('auth')
+  },
   interval: nconf.get('interval')
 });
