@@ -1,27 +1,21 @@
 # numbat-redis
-Monitor your Redis.
+Monitor your Redis with Numbat.
 
 ## Installation
 
 ```bash
-npm install godot-redis
+npm install numbat-redis
 ```
 
 ## Usage
-```js
-var godot = require('godot');
-var RedisProducer = require('godot-redis');
 
-godot.createClient({
-  type: 'tcp',
-  producers: [
-    RedisProducer({
-      redis: {
-        host: '127.0.0.1',
-        port: 6379
-      },
-      ttl: 1000
-    })
-  ]
-}).connect(1337);
+```js
+var NumbatRedis = require('numbat-redis');
+var emitter = new NumbatRedis({
+  redis: {
+    host: 'localhost',
+    port: 6379
+  },
+  interval: 1000
+});
 ```
