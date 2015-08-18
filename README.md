@@ -1,5 +1,5 @@
-# godot-redis
-Monitor your Redis, damn it.
+# numbat-redis
+Monitor your Redis.
 
 ## Installation
 
