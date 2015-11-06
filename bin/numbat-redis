@@ -43,11 +43,11 @@ if (nconf.get('help')) {
 
 var producer = new RedisProducer({
   uri: nconf.get('uri'),
-  node: nconf.get('hostname') || os.hostname(),
+  app: 'redis',
   redis: {
     host: nconf.get('host') || '127.0.0.1',
     port: nconf.get('port') || 6379,
     auth_pass: nconf.get('auth')
   },
-  interval: nconf.get('interval')
+  interval: nconf.get('interval'),
 });
