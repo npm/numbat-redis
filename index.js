@@ -27,32 +27,32 @@ var RedisProducer = module.exports = function(options) {
       var parsed = redisInfo.parse(info);
 
       emitter.metric({
-        name: 'redis.clients',
-        description: 'Clients connected',
+        name: 'clients',
         value: parseInt(parsed.fields.connected_clients, 10)
       });
 
       emitter.metric({
-        name: 'redis.blocked-clients',
-        description: 'Clients waiting for a blocking operation to finish',
-        value: parseInt(parsed.fields.blocked_clients, 10)
+        name: 'used_memory',
+        value: parseInt(parsed.fields.used_memory, 10)
       });
 
       emitter.metric({
-        name: 'redis.rejected-connections',
-        description: 'Clients rejected due to limit of clients',
-        value: parseInt(parsed.fields.rejected_connections, 10)
+        name: 'used_cpu_sys',
+        value: parseInt(parsed.fields.used_cpu_sys, 10)
       });
 
       emitter.metric({
-        name: 'redis.ops-per-sec',
-        description: 'Operations per second',
+        name: 'used_cpu_user',
+        value: parseInt(parsed.fields.used_cpu_user, 10)
+      });
+
+      emitter.metric({
+        name: 'ops-per-sec',
         value: parseInt(parsed.fields.instantaneous_ops_per_sec, 10)
       });
 
       emitter.metric({
-        name: 'redis.slaves',
-        description: 'Slaves connected',
+        name: 'slaves',
         value: parseInt(parsed.fields.connected_slaves, 10)
       });
     });
