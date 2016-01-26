@@ -14,10 +14,10 @@
   },
   "dependencies": {
     "bole": "~2.0.0",
-    "nconf": "~0.7.1",
-    "numbat-emitter": "~2.0.3",
-    "redis": "~0.10.0",
-    "redis-info": "~2.0.2"
+    "nconf": "~0.8.2",
+    "numbat-emitter": "~2.3.1",
+    "redis": "~2.4.2",
+    "redis-info": "~3.0.6"
   },
   "bin": {
     "numbat-redis": "./bin/numbat-redis"
