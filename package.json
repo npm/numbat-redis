@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "bole": "~2.0.0",
-    "nconf": "~0.7.1",
+    "nconf": "~0.8.3",
     "numbat-emitter": "~2.0.3",
     "redis": "~0.10.0",
     "redis-info": "~2.0.2"
