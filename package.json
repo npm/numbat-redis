@@ -17,7 +17,7 @@
     "nconf": "~0.7.1",
     "numbat-emitter": "~2.0.3",
     "redis": "~0.10.0",
-    "redis-info": "~2.0.2"
+    "redis-info": "~3.0.6"
   },
   "bin": {
     "numbat-redis": "./bin/numbat-redis"
