@@ -1,3 +1,5 @@
+'use strict';
+
 var bole = require('bole');
 var redis = require('redis');
 var redisInfo = require('redis-info');
@@ -24,36 +26,36 @@ var RedisProducer = module.exports = function(options) {
         return;
       }
 
-      var parsed = redisInfo.parse(info);
+      const parsed = redisInfo.parse(info);
 
       emitter.metric({
         name: 'clients',
-        value: parseInt(parsed.fields.connected_clients, 10)
+        value: parseInt(parsed.connected_clients, 10)
       });
 
       emitter.metric({
         name: 'used_memory',
-        value: parseInt(parsed.fields.used_memory, 10)
+        value: parseInt(parsed.used_memory, 10)
       });
 
       emitter.metric({
         name: 'used_cpu_sys',
-        value: parseInt(parsed.fields.used_cpu_sys, 10)
+        value: parseInt(parsed.used_cpu_sys, 10)
       });
 
       emitter.metric({
         name: 'used_cpu_user',
-        value: parseInt(parsed.fields.used_cpu_user, 10)
+        value: parseInt(parsed.used_cpu_user, 10)
       });
 
       emitter.metric({
         name: 'ops-per-sec',
-        value: parseInt(parsed.fields.instantaneous_ops_per_sec, 10)
+        value: parseInt(parsed.instantaneous_ops_per_sec, 10)
       });
 
       emitter.metric({
         name: 'slaves',
-        value: parseInt(parsed.fields.connected_slaves, 10)
+        value: parseInt(parsed.connected_slaves, 10)
       });
     });
   }

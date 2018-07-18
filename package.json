@@ -13,11 +13,11 @@
     "url": "https://github.com/npm/numbat-redis.git"
   },
   "dependencies": {
-    "bole": "~2.0.0",
-    "nconf": "~0.7.1",
-    "numbat-emitter": "~2.0.3",
-    "redis": "~0.10.0",
-    "redis-info": "~2.0.2"
+    "bole": "^3.0.2",
+    "nconf": "^0.10.0",
+    "numbat-emitter": "^5.0.2",
+    "redis": "^2.8.0",
+    "redis-info": "^3.0.6"
   },
   "bin": {
     "numbat-redis": "./bin/numbat-redis"
